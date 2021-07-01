@@ -6,7 +6,6 @@
  * @since        1/07/2021  
 -----------------------------------------------------------------------------------------------*/
 const service = require('../services/service');
-const model = require('../models/model')
 const validateSchema = require('../middleware/validation')
 
 class AddressBookController{
@@ -30,7 +29,8 @@ class AddressBookController{
             state: req.body.state,
             phone: req.body.phone,
             email: req.body.email,
-            zip: req.body.zip
+            zip: req.body.zip,
+            password: req.body.password
         }
 
         const addData ={}

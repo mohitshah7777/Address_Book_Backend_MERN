@@ -3,9 +3,10 @@
  * @file         models.js
  * @description  addressBookSchema holds the database Schema 
  * @author       Mohit Shah <mohitshah7777@gmail.com>
- * @since        1/07/2021  
+ * @since        01/07/2021  
 -----------------------------------------------------------------------------------------------*/
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const addressBookSchema = mongoose.Schema({
     fullName: {
@@ -44,9 +45,19 @@ const addressBookSchema = mongoose.Schema({
         required : true,
         validate: /^[0-9]{1,6}/      
     },
-
+    password: {
+        type: String,
+        required: true
+    }
 },{
     timestamps: true
+})
+
+addressBookSchema.pre("save", async function(next){
+    if(this.isModified("password")){
+        this.password = await bcrypt.hash(this.password, 10)
+    }
+    next();
 })
 
 const AddressBook = mongoose.model('AddressBook', addressBookSchema)
@@ -65,8 +76,8 @@ class AddressBookModel {
             state: contact.state,
             phone: contact.phone,
             email: contact.email,
-            zip: contact.zip
-
+            zip: contact.zip,
+            password: contact.password
         });
         addressBookSchema.save(callback)
     };

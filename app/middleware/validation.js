@@ -9,6 +9,8 @@ const validateSchema = Joi.object({
     phone: Joi.string().min(10).max(10).pattern(new RegExp('^[0-9]{2,}')).required(),
     email: Joi.string().email().pattern(new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$")).required(),
     zip: Joi.string().min(2).max(15).pattern(new RegExp('^[0-9]{2,}')).required(),
+    password: Joi.string().min(8).max(20).pattern(new RegExp("^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$")).required()
+    
 }) 
 
 module.exports = validateSchema;
