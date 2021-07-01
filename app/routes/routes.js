@@ -14,4 +14,7 @@ module.exports = (app) => {
 
     //api for login
     app.post('/login', controller.login);
+
+    //api for read
+    app.get('/read',controller.read);
 }

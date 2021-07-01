@@ -87,16 +87,31 @@ class AddressBookModel {
      * @param loginData 
      * @param callback for service
      */
-         loginDetails = (loginData, callBack) => {
-            AddressBook.findOne({'email': loginData.email},(error, data) => {
-                if(error){
-                    return callBack(error, null);
-                }else if(!data){
-                    return callBack("Invalid Credentials", null);
-                }
-                return callBack(null, data);
-            })
-        }
+    loginDetails = (loginData, callBack) => {
+        AddressBook.findOne({'email': loginData.email},(error, data) => {
+            if(error){
+                return callBack(error, null);
+            }else if(!data){
+                return callBack("Invalid Credentials", null);
+            }
+            return callBack(null, data);
+        })
+    }
+
+    /**
+     * @description find all users from the database
+     * @param findAll 
+     * @param callback for service
+     */
+    findAll = (callBack) => {
+        AddressBook.find({}, (error, data) => {
+            if(error){
+                return callBack(error, null)
+            }else{
+                return callBack(null, data)
+            }
+        })
+    }  
 }
 
 module.exports = new AddressBookModel()

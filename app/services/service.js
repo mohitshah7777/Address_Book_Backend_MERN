@@ -36,6 +36,17 @@ class AddressBookService {
             return callback("Incorrect Password", error)    
         })
     }
+
+    /**
+     * @description sends the info to read in the controller
+     * @method getAllDetails
+     * @param callback callback for controller
+    */
+    getAllDetails = (callback) => {
+        model.findAll((error, data) => {
+            return (error) ? callback(error, null) : callback(null, data)
+        })
+    }
 }
 
 module.exports = new AddressBookService()
