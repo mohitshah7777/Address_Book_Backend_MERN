@@ -141,7 +141,7 @@ class AddressBookController{
         var contact = req.params
         service.deleteDetailsById(contact, (error, data) => {
             if(error || data == null){
-                return res.status(404).send({success: false, message: "Employee not found", data: null})
+                return res.status(404).send({success: false, message: "Contact not found", data: null})
             }else{
                 return res.status(200).send({success: true, message: "Contact details deleted successfully!", data: data})
             }

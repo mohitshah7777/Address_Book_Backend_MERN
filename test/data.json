@@ -1,0 +1,89 @@
+{
+    "login": {
+        "email": "tanay2@gmail.com",
+        "password": "Tanay@123"
+    },
+    
+    "loginNegative": {
+        "email": "neg@gmail.com",
+        "password": "neg@123"
+    },
+
+    "register": {
+        "fullName": "Tanay Agrawaal",
+        "address": "Andheri",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "phone": "9099009090",
+        "email": "tanay2@gmail.com",
+        "zip": "411200",
+        "password": "Tanay@123"
+    },
+    
+    "registerNegative": {
+        "fullName": "Tanay Agrawaal",
+        "address": "Andheri",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "phone": "9099009090",
+        "email": "tanay2@gmail.com",
+        "zip": "411200",
+        "password": "Tanay@123"
+    },
+
+    "registerWithoutFullName" : {
+        "fullName": "",
+        "address": "Andheri",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "phone": "9099009090",
+        "email": "tanay2@gmail.com",
+        "zip": "411200",
+        "password": "Tanay@123"
+    },
+
+    "registerWithSameEmail" : {
+        "fullName": "Tanay Agrawaal",
+        "address": "Andheri",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "phone": "9099009090",
+        "email": "tanay2@gmail.com",
+        "zip": "411200",
+        "password": "Tanay@123"
+    },
+
+    "personId": "60de0be14bd22b34c0619353",
+
+    "personIdNegative": "60d196c9171e4007f03a3b8",
+
+    "personIdDelete": "60ddfdc615c38422f48aa6bf",
+
+    "personIdDeleteNegative": "60d196c9171e4007f03a3b8",
+
+    "personIdUpdate": "60d61e518d9fc31e44d79141",
+    
+    "updateData": {
+        "fullName": "Tanay Agrawaal",
+        "address": "Hadapsar",
+        "city": "Pune",
+        "state": "Maharashtra",
+        "phone": "9099009090",
+        "email": "tanay2@gmail.com",
+        "zip": "411200",
+        "password": "Tanay@123"
+    },
+
+    "personIdUpdateNegative": "60d61e518d9fc31e44d7914",
+
+    "updateDataNegative": {
+        "fullName": "Tanay Agrawaal",
+        "address": "Andheri",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "phone": "9099009090",
+        "email": "tanay2@gmail.com",
+        "zip": "411200",
+        "password": "Tanay@123"
+    }
+}
