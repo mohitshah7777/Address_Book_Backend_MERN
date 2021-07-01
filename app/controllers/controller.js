@@ -7,6 +7,7 @@
 -----------------------------------------------------------------------------------------------*/
 const service = require('../services/service');
 const model = require('../models/model')
+const validateSchema = require('../middleware/validation')
 
 class AddressBookController{
     /**
@@ -15,6 +16,12 @@ class AddressBookController{
      * @param req,res for service
      */
     add = (req, res) => {
+        // Validate request
+        const validation = validateSchema.validate(req.body)
+        if(validation.error){
+            res.status(400).send({message: validation.error.details[0].message})
+        }
+
         // Create an employee
         const contact = {
             fullName: req.body.fullName,

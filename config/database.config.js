@@ -5,7 +5,7 @@
  * @since        01/07/2021  
 -----------------------------------------------------------------------------------------------*/
 
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 require('dotenv').config()
 
 mongoose.Promise = global.Promise;
