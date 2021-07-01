@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 require('./config/database.config');
 require('dotenv')
 
@@ -17,6 +17,9 @@ const port = process.env.PORT
 app.get('/',(req,res) => {
     res.json({"message": "Welcome to Address Book App"})
 })
+
+// Require Employee routes
+require('./app/routes/routes')(app);
 
 // listen for requests
 app.listen(port, () => {
