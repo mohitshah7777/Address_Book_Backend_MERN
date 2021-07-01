@@ -111,7 +111,22 @@ class AddressBookModel {
                 return callBack(null, data)
             }
         })
-    }  
+    } 
+
+    /**
+     * @description find user by id from the database
+     * @param findOne
+     * @param callback for service
+     */
+    findOne = (contact, callBack) => {
+        AddressBook.findById({'_id': contact._id}, (error, data) => {
+            if(error){
+                return callBack(error, null)
+            }else {
+                 return callBack(null, data)
+            }
+        })
+    }
 }
 
 module.exports = new AddressBookModel()

@@ -47,6 +47,17 @@ class AddressBookService {
             return (error) ? callback(error, null) : callback(null, data)
         })
     }
+
+    /**
+     * @description sends the info to readOne in the controller
+     * @method getDetailsById
+     * @param callback callback for controller
+    */
+    getDetailsById = (contact, callback) => {
+        model.findOne(contact, (error, data) => {
+            return (error) ? callback(error, null) : callback(null, data)
+        })
+    }
 }
 
 module.exports = new AddressBookService()

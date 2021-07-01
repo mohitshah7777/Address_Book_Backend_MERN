@@ -77,7 +77,23 @@ class AddressBookController{
             if(error){
                 return res.status(400).send({success: false, message : "Error while fetching information", data: null})
             }else{
-                return res.status(200).send({success: true, message: "All Employee details fetched", data: data})
+                return res.status(200).send({success: true, message: "All contact details fetched", data: data})
+            }
+        })
+    }
+
+    /**
+     * @description retrieving user data by Id
+     * @method readOne
+     * @param req,res for service
+    */
+    readOne = (req, res) => {
+        var contactId = req.params
+        service.getDetailsById(contactId,(error, data) => {
+            if(error || data == null){
+                return res.status(404).send({success: false, message: "Error! Not Found", data: null})
+            }else{
+                return res.status(200).send({success: true, message: "Particular person contact details fetched", data: data})
             }
         })
     }
