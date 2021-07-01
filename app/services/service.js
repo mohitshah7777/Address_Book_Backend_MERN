@@ -69,6 +69,17 @@ class AddressBookService {
             return (error) ? callback(error, null) : callback(null, data)
         })
     }
+
+    /**
+     * @description sends the info to delete in the controller
+     * @method deleteDetailsById
+     * @param callback callback for controller
+    */
+    deleteDetailsById = (contact, callback) => {
+        model.deleteById(contact, (error, data) => {
+            return (error) ? callback(error, null) : callback(null, data)
+        })
+    }
 }
 
 module.exports = new AddressBookService()

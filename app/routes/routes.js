@@ -23,4 +23,7 @@ module.exports = (app) => {
     
     //api for update by id
     app.put('/update/:_id', controller.update);
+    
+    //api for delete by id
+    app.delete('/delete/:_id', controller.delete);
 }

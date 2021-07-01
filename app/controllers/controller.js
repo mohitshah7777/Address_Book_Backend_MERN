@@ -11,7 +11,7 @@ const validateSchema = require('../middleware/validation')
 class AddressBookController{
     /**
      * @description Create and save person details and sending response to service
-     * @method add to save the employee
+     * @method add to save the contact
      * @param req,res for service
      */
     add = (req, res) => {
@@ -21,7 +21,7 @@ class AddressBookController{
             res.status(400).send({message: validation.error.details[0].message})
         }
 
-        // Create an employee
+        // Create an contact
         const contact = {
             fullName: req.body.fullName,
             address: req.body.address,
@@ -128,6 +128,22 @@ class AddressBookController{
                 return res.status(404).send({success: false, message: "Error! Not Found", data: null})
             }else{
                 return res.status(200).send({success: true, message: "Contact details updated successfully", data: data})
+            }
+        })
+    }
+
+    /**
+     * @description deleting user data using Id
+     * @method delete
+     * @param req,res for service
+    */
+    delete = (req, res) => {
+        var contact = req.params
+        service.deleteDetailsById(contact, (error, data) => {
+            if(error || data == null){
+                return res.status(404).send({success: false, message: "Employee not found", data: null})
+            }else{
+                return res.status(200).send({success: true, message: "Contact details deleted successfully!", data: data})
             }
         })
     }

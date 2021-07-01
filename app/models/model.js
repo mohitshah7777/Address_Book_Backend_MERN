@@ -151,6 +151,21 @@ class AddressBookModel {
             }
         })
     }
+
+    /**
+     * @description find user by id and delete in the database
+     * @param deleteById
+     * @param callback for service
+     */
+    deleteById = (contact, callBack) => {
+        AddressBook.findByIdAndRemove(contact._id, (error, data) => {
+            if(error){
+                return callBack(error, null)
+            }else{
+                return callBack(null, data)
+            }   
+        })
+    }
 }
 
 module.exports = new AddressBookModel()
