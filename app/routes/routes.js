@@ -11,4 +11,7 @@ module.exports = (app) => {
     
     //api for registration
     app.post('/add', controller.add);
+
+    //api for login
+    app.post('/login', controller.login);
 }

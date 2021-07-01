@@ -46,6 +46,26 @@ class AddressBookController{
             }
         })
     }
+
+    /**
+     * @description retrieving login info from user by email and password
+     * @method login
+     * @param req,res for service
+     */
+    login = (req, res) => {
+        const loginData = {
+            email: req.body.email,
+            password : req.body.password
+        }
+        service.loginDetails(loginData, (error, token) => {
+            if(error){
+                return res.status(400).send({success: false, message: error, token: null})
+            }
+            else{
+                return res.status(200).send({success: true, message: "Successfully Logged In", token: token})
+            }
+        })
+    }
 }
 
 module.exports = new AddressBookController()

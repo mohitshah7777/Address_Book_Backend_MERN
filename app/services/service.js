@@ -6,6 +6,7 @@
  * @since        01/07/2021  
 -----------------------------------------------------------------------------------------------*/
 const model = require('../models/model')
+const helper = require('../middleware/helper')
 
 class AddressBookService {
     /**
@@ -16,6 +17,23 @@ class AddressBookService {
     addDetails = (contact, callback) => {
         model.addDetails(contact, (error, data) => {
             return error ? callback(error, null) : callback(null, data)
+        })
+    }
+
+        /**
+     * @description sends the info to loginApi in the controller
+     * @method loginDetails
+     * @param callback callback for controller
+    */
+    loginDetails = (loginData, callback) => {
+        model.loginDetails(loginData, (error, data) => {
+            if(error){
+                return callback(error, null)
+            }if(helper.bcryptAuthentication(loginData.password, data.password)){
+                const token = helper.createToken({loginData})
+                return (token) ? callback(null, token) : callback(error, null)
+            }
+            return callback("Incorrect Password", error)    
         })
     }
 }
