@@ -97,6 +97,40 @@ class AddressBookController{
             }
         })
     }
+
+    /**
+     * @description updating user data using Id
+     * @method update
+     * @param req,res for service
+    */
+    update = (req, res) => {
+        const validation = validateSchema.validate(req.body)
+        if(validation.error){
+            res.status(400).send({message: validation.error.details[0].message})
+        }   
+    
+        const contact = {
+            _id: req.params._id,
+            fullName: req.body.fullName,
+            address: req.body.address,
+            city: req.body.city,
+            state: req.body.state,
+            phone: req.body.phone,
+            email: req.body.email,
+            zip: req.body.zip,
+            password: req.body.password
+        } 
+
+        var contactId = req.params
+
+        service.updateDetailsById(contactId, contact,(error, data) => {
+            if(error){
+                return res.status(404).send({success: false, message: "Error! Not Found", data: null})
+            }else{
+                return res.status(200).send({success: true, message: "Contact details updated successfully", data: data})
+            }
+        })
+    }
 }
 
 module.exports = new AddressBookController()

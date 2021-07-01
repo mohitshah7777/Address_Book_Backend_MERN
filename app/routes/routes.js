@@ -19,5 +19,8 @@ module.exports = (app) => {
     app.get('/read',controller.read);
 
     //api for read by id
-    app.get('/read/:_id',controller.readOne);    
+    app.get('/read/:_id',controller.readOne);  
+    
+    //api for update by id
+    app.put('/update/:_id', controller.update);
 }

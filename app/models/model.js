@@ -127,6 +127,30 @@ class AddressBookModel {
             }
         })
     }
+
+    /**
+     * @description find user by id and update in the database
+     * @param updateById
+     * @param callback for service
+    */
+    updateById = (_id, contact, callBack) => {
+        AddressBook.findByIdAndUpdate({'_id': contact._id}, {
+            fullName: contact.fullName,
+            address: contact.address,
+            city: contact.city,
+            state: contact.state,
+            phone: contact.phone,
+            email: contact.email,
+            zip: contact.zip,
+            password: contact.password
+        }, (error, data) => {
+            if(error){
+                return callBack(error, null)
+            }else {
+                return callBack(null, data)
+            }
+        })
+    }
 }
 
 module.exports = new AddressBookModel()

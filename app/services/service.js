@@ -58,6 +58,17 @@ class AddressBookService {
             return (error) ? callback(error, null) : callback(null, data)
         })
     }
+
+    /**
+     * @description sends the info to update in the controller
+     * @method updateDetailsById
+     * @param callback callback for controller
+    */
+    updateDetailsById = (contactId, contact, callback) => {
+        model.updateById(contactId, contact, (error, data) => {
+            return (error) ? callback(error, null) : callback(null, data)
+        })
+    }
 }
 
 module.exports = new AddressBookService()
