@@ -15,7 +15,7 @@
         "city": "Mumbai",
         "state": "Maharashtra",
         "phone": "9099009090",
-        "email": "tanay2@gmail.com",
+        "email": "tanay3@gmail.com",
         "zip": "411200",
         "password": "Tanay@123"
     },
@@ -57,11 +57,11 @@
 
     "personIdNegative": "60d196c9171e4007f03a3b8",
 
-    "personIdDelete": "60ddfdc615c38422f48aa6bf",
+    "personIdDelete": "60dd7b1350fdd11108f94f23",
 
     "personIdDeleteNegative": "60d196c9171e4007f03a3b8",
 
-    "personIdUpdate": "60d61e518d9fc31e44d79141",
+    "personIdUpdate": "60de0be14bd22b34c0619353",
     
     "updateData": {
         "fullName": "Tanay Agrawaal",

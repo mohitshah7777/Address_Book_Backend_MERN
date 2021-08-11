@@ -1,14 +1,14 @@
 /**
- * @module       AddressBook
+ * @module       Contact
  * @file         models.js
- * @description  addressBookSchema holds the database Schema 
+ * @description  contactSchema holds the database Schema 
  * @author       Mohit Shah <mohitshah7777@gmail.com>
  * @since        01/07/2021  
 -----------------------------------------------------------------------------------------------*/
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const addressBookSchema = mongoose.Schema({
+const contactSchema = mongoose.Schema({
     fullName: {
         type: String,
         required : true ,
@@ -44,67 +44,49 @@ const addressBookSchema = mongoose.Schema({
         type: String,
         required : true,
         validate: /^[0-9]{1,6}/      
-    },
-    password: {
-        type: String,
-        required: true
     }
 },{
     timestamps: true
 })
 
-addressBookSchema.pre("save", async function(next){
-    if(this.isModified("password")){
-        this.password = await bcrypt.hash(this.password, 10)
-    }
-    next();
-})
 
-const AddressBook = mongoose.model('AddressBook', addressBookSchema)
+// contactSchema.pre("save", async function(next){
+//     if(this.isModified("password")){
+//         this.password = await bcrypt.hash(this.password, 10)
+//         this.confirmPassword = await bcrypt.hash(this.confirmPassword, 10)
+//     }
+//     next();
+// })
 
-class AddressBookModel {
+const Contact = mongoose.model('Contact', contactSchema)
+
+class ContactModel {
     /**
      * @description add person in the database
      * @param contact 
      * @param callback 
      */
-    addDetails = (contact, callback) => {
-        const addressBookSchema = new AddressBook({
+    createContact = (contact, callback) => {
+        const contactSchema = new Contact({
             fullName: contact.fullName,
             address: contact.address,
             city: contact.city,
             state: contact.state,
             phone: contact.phone,
             email: contact.email,
-            zip: contact.zip,
-            password: contact.password
+            zip: contact.zip
         });
-        addressBookSchema.save(callback)
+        contactSchema.save(callback)
     };
 
-    /**
-     * @description login user from the database
-     * @param loginData 
-     * @param callback for service
-     */
-    loginDetails = (loginData, callBack) => {
-        AddressBook.findOne({'email': loginData.email},(error, data) => {
-            if(error){
-                return callBack(error, null);
-            }else if(!data){
-                return callBack("Invalid Credentials", null);
-            }
-            return callBack(null, data);
-        })
-    }
-
+   
     /**
      * @description find all users from the database
      * @param findAll 
      * @param callback for service
      */
     findAll = (callBack) => {
-        AddressBook.find({}, (error, data) => {
+        Contact.find({}, (error, data) => {
             if(error){
                 return callBack(error, null)
             }else{
@@ -119,7 +101,7 @@ class AddressBookModel {
      * @param callback for service
      */
     findOne = (contact, callBack) => {
-        AddressBook.findById({'_id': contact._id}, (error, data) => {
+        Contact.findById({'_id': contact._id}, (error, data) => {
             if(error){
                 return callBack(error, null)
             }else {
@@ -134,16 +116,15 @@ class AddressBookModel {
      * @param callback for service
     */
     updateById = (_id, contact, callBack) => {
-        AddressBook.findByIdAndUpdate({'_id': contact._id}, {
+        Contact.findByIdAndUpdate({'_id': contact._id}, {
             fullName: contact.fullName,
             address: contact.address,
             city: contact.city,
             state: contact.state,
             phone: contact.phone,
             email: contact.email,
-            zip: contact.zip,
-            password: contact.password
-        }, (error, data) => {
+            zip: contact.zip
+        },{new: true},(error, data) => {
             if(error){
                 return callBack(error, null)
             }else {
@@ -158,7 +139,7 @@ class AddressBookModel {
      * @param callback for service
      */
     deleteById = (contact, callBack) => {
-        AddressBook.findByIdAndRemove(contact._id, (error, data) => {
+        Contact.findByIdAndRemove(contact._id, (error, data) => {
             if(error){
                 return callBack(error, null)
             }else{
@@ -168,4 +149,4 @@ class AddressBookModel {
     }
 }
 
-module.exports = new AddressBookModel()
+module.exports = new ContactModel()

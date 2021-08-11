@@ -1,14 +1,14 @@
 /**
- * @module       AddressBookController
+ * @module       ContactController
  * @file         controller.js
- * @description  AddressBookController class holds the Api methods for routing 
+ * @description  ContactController class holds the Api methods for routing 
  * @author       Mohit Shah <mohitshah7777@gmail.com>
  * @since        1/07/2021  
 -----------------------------------------------------------------------------------------------*/
-const service = require('../services/service');
-const validateSchema = require('../middleware/validation')
+const service = require('../services/contact');
+const validateSchema = require('../middleware/contactValidation')
 
-class AddressBookController{
+class ContactController{
     /**
      * @description Create and save person details and sending response to service
      * @method add to save the contact
@@ -35,34 +35,14 @@ class AddressBookController{
 
         const addData ={}
         
-        service.addDetails(contact, (error,data) => {
+        service.createContact(contact, (error,data) => {
             if(error){
                 return res.status(400)
                 .send({success:false, message: "Email already exists", data: null})
             }
             else{
                 return res.status(200)
-                .send({success: true, message: "Person details has been added successfully", data: addData.data = data})
-            }
-        })
-    }
-
-    /**
-     * @description retrieving login info from user by email and password
-     * @method login
-     * @param req,res for service
-     */
-    login = (req, res) => {
-        const loginData = {
-            email: req.body.email,
-            password : req.body.password
-        }
-        service.loginDetails(loginData, (error, token) => {
-            if(error){
-                return res.status(400).send({success: false, message: error, token: null})
-            }
-            else{
-                return res.status(200).send({success: true, message: "Successfully Logged In", token: token})
+                .send({success: true, message: "Person details has been registered successfully", data: addData.data = data})
             }
         })
     }
@@ -149,4 +129,4 @@ class AddressBookController{
     }
 }
 
-module.exports = new AddressBookController()
+module.exports = new ContactController()
