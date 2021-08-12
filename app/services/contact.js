@@ -7,6 +7,7 @@
 -----------------------------------------------------------------------------------------------*/
 const { data } = require('../../logger/logger')
 const model = require('../models/contact')
+const logger = require('../../logger/logger')
 
 class ContactService {
     /**
@@ -52,6 +53,7 @@ class ContactService {
             return data;
         }catch(error){
             return data;
+            logger.error('error', `service error`)
         }
     }
 

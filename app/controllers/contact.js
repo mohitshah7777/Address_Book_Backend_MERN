@@ -38,11 +38,12 @@ class ContactController {
 
         service.createContact(contact, (error, data) => {
             if (error) {
-                // logger.error('error', `Something went wrong`)
+                logger.error('error', `Email already exists`)
                 return res.status(400)
                     .send({ success: false, message: "Email already exists", data: null })
             }
             else {
+                logger.log(`info`,`Registered successfully`);
                 return res.status(200)
                     .send({ success: true, message: "Person details has been registered successfully", data: addData.data = data })
             }
@@ -59,12 +60,15 @@ class ContactController {
             service.getAllDetails()
                 .then((data) => {
                     if (data) {
+                        logger.log(`info`,`details fetched`);
                         res.status(200).send({ success: true, message: "All contact details fetched", data: data })
                     }
                 }).catch((error) => {
+                    logger.error('error', `Error while fetching info`)
                     res.status(400).send({ success: false, message: error + "Error while fetching information", data: null })
                 })
         } catch (error) {
+            logger.error('error', `Bad request`)
             res.status(400).send({ success: false, message: error.message, data: null })
         }
     }
@@ -79,11 +83,14 @@ class ContactController {
         try {
             const data = await service.getDetailsById(contactId);
             if (data == null) {
+                logger.log(`info`,`Server is listening on port`);
                 return res.status(404).send({ success: false, message: "Error! Not Found", data: null })
             } else if (data) {
+                logger.log(`info`,`details fetched by using id`);
                 return res.status(200).send({ success: true, message: "Particular person contact details fetched", data: data })
             }
         } catch (error) {
+            logger.error('error', `Internal server error`)
             return res.status(500).send({ success: false, message: "Something went wrong" })
 
         }
