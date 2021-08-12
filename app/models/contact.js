@@ -7,6 +7,7 @@
 -----------------------------------------------------------------------------------------------*/
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const { error } = require('winston');
 
 const contactSchema = mongoose.Schema({
     fullName: {
@@ -44,19 +45,13 @@ const contactSchema = mongoose.Schema({
         type: String,
         required : true,
         validate: /^[0-9]{1,6}/      
+    },
+    __v: {
+        versionKey: false
     }
 },{
     timestamps: true
 })
-
-
-// contactSchema.pre("save", async function(next){
-//     if(this.isModified("password")){
-//         this.password = await bcrypt.hash(this.password, 10)
-//         this.confirmPassword = await bcrypt.hash(this.confirmPassword, 10)
-//     }
-//     next();
-// })
 
 const Contact = mongoose.model('Contact', contactSchema)
 
@@ -81,18 +76,25 @@ class ContactModel {
 
    
     /**
-     * @description find all users from the database
+     * @description find all users from the database using promises
      * @param findAll 
-     * @param callback for service
+     * @param 
      */
-    findAll = (callBack) => {
-        Contact.find({}, (error, data) => {
-            if(error){
-                return callBack(error, null)
-            }else{
-                return callBack(null, data)
-            }
-        })
+    findAll = () => {
+        try{
+            return Contact.find()
+            .then((data) => {
+                if(data){
+                    return data
+                }else{
+                    return null
+                }
+            }).catch((error) => {
+                return error
+            })
+        }catch(error){
+            return error
+        }
     } 
 
     /**

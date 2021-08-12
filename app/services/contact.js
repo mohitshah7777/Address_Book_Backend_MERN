@@ -6,7 +6,6 @@
  * @since        01/07/2021  
 -----------------------------------------------------------------------------------------------*/
 const model = require('../models/contact')
-const helper = require('../middleware/helper')
 
 class ContactService {
     /**
@@ -14,21 +13,31 @@ class ContactService {
      * @method addDetails to save the contact
      * @param callback callback for controller
      */
-    createContact = async (contact, callback) => {
+    createContact = (contact, callback) => {
         model.createContact(contact, (error, data) => {
             return error ? callback(error, null) : callback(null, data)
         })
     }
 
     /**
-     * @description sends the info to read in the controller
+     * @description sends the info to read in the controller using promises
      * @method getAllDetails
-     * @param callback callback for controller
+     * @param 
     */
-    getAllDetails = (callback) => {
-        model.findAll((error, data) => {
-            return (error) ? callback(error, null) : callback(null, data)
-        })
+    getAllDetails = () => {
+        try{
+            return model.findAll().then((data) => {
+                if(data){
+                    return data
+                }else{
+                    return null
+                }
+            }).catch((error) => {
+                return error
+            })
+        }catch(error){  
+            return error
+        }
     }
 
     /**

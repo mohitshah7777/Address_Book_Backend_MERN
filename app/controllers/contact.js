@@ -6,60 +6,74 @@
  * @since        1/07/2021  
 -----------------------------------------------------------------------------------------------*/
 const service = require('../services/contact');
-const validateSchema = require('../middleware/contactValidation')
+const validateSchema = require('../middleware/contactValidation');
+const logger = require('../../logger/logger');
 
-class ContactController{
+class ContactController {
     /**
      * @description Create and save person details and sending response to service
      * @method add to save the contact
      * @param req,res for service
      */
     add = (req, res) => {
-        // Validate request
-        const validation = validateSchema.validate(req.body)
-        if(validation.error){
-            res.status(400).send({message: validation.error.details[0].message})
-        }
-
-        // Create an contact
-        const contact = {
-            fullName: req.body.fullName,
-            address: req.body.address,
-            city: req.body.city,
-            state: req.body.state,
-            phone: req.body.phone,
-            email: req.body.email,
-            zip: req.body.zip,
-            password: req.body.password
-        }
-
-        const addData ={}
-        
-        service.createContact(contact, (error,data) => {
-            if(error){
-                return res.status(400)
-                .send({success:false, message: "Email already exists", data: null})
+        try {
+            // Validate request
+            const validation = validateSchema.validate(req.body)
+            if (validation.error) {
+                logger.error('error,Validation error');
+                res.status(400).send({ message: validation.error.details[0].message })
             }
-            else{
-                return res.status(200)
-                .send({success: true, message: "Person details has been registered successfully", data: addData.data = data})
+
+            // Create an contact
+            const contact = {
+                fullName: req.body.fullName,
+                address: req.body.address,
+                city: req.body.city,
+                state: req.body.state,
+                phone: req.body.phone,
+                email: req.body.email,
+                zip: req.body.zip,
             }
-        })
+
+            const addData = {}
+
+            service.createContact(contact, (error, data) => {
+                if (error) {
+                    logger.error('error', `Something went wrong`)
+                    return res.status(400)
+                        .send({ success: false, message: "Email already exists", data: null })
+                }
+                else {
+                    return res.status(200)
+                        .send({ success: true, message: "Person details has been registered successfully", data: addData.data = data })
+                }
+            })
+        } catch (err) {
+           res.status(500).send({
+               success: false,
+               message: err.message,
+           })
+        }
     }
 
     /**
-    * @description retrieving all user data
+    * @description retrieving all user data using promises
     * @method read
     * @param req,res for service
     */
     read = (req, res) => {
-        service.getAllDetails((error, data) => {
-            if(error){
-                return res.status(400).send({success: false, message : "Error while fetching information", data: null})
-            }else{
-                return res.status(200).send({success: true, message: "All contact details fetched", data: data})
-            }
-        })
+        try{
+            service.getAllDetails()
+            .then((data) => {
+                if(data){
+                    res.status(200).send({ success: true, message: "All contact details fetched", data: data })
+                }
+            }).catch((error) => {
+                res.status(400).send({ success: false, message: error+"Error while fetching information", data: null })
+            })
+        }catch(error){
+            res.status(400).send({ success: false, message: error.message, data: null })
+        }
     }
 
     /**
@@ -69,11 +83,11 @@ class ContactController{
     */
     readOne = (req, res) => {
         var contactId = req.params
-        service.getDetailsById(contactId,(error, data) => {
-            if(error || data == null){
-                return res.status(404).send({success: false, message: "Error! Not Found", data: null})
-            }else{
-                return res.status(200).send({success: true, message: "Particular person contact details fetched", data: data})
+        service.getDetailsById(contactId, (error, data) => {
+            if (error || data == null) {
+                return res.status(404).send({ success: false, message: "Error! Not Found", data: null })
+            } else {
+                return res.status(200).send({ success: true, message: "Particular person contact details fetched", data: data })
             }
         })
     }
@@ -85,10 +99,10 @@ class ContactController{
     */
     update = (req, res) => {
         const validation = validateSchema.validate(req.body)
-        if(validation.error){
-            res.status(400).send({message: validation.error.details[0].message})
-        }   
-    
+        if (validation.error) {
+            res.status(400).send({ message: validation.error.details[0].message })
+        }
+
         const contact = {
             _id: req.params._id,
             fullName: req.body.fullName,
@@ -99,15 +113,15 @@ class ContactController{
             email: req.body.email,
             zip: req.body.zip,
             password: req.body.password
-        } 
+        }
 
         var contactId = req.params
 
-        service.updateDetailsById(contactId, contact,(error, data) => {
-            if(error){
-                return res.status(404).send({success: false, message: "Error! Not Found", data: null})
-            }else{
-                return res.status(200).send({success: true, message: "Contact details updated successfully", data: data})
+        service.updateDetailsById(contactId, contact, (error, data) => {
+            if (error) {
+                return res.status(404).send({ success: false, message: "Error! Not Found", data: null })
+            } else {
+                return res.status(200).send({ success: true, message: "Contact details updated successfully", data: data })
             }
         })
     }
@@ -120,10 +134,10 @@ class ContactController{
     delete = (req, res) => {
         var contact = req.params
         service.deleteDetailsById(contact, (error, data) => {
-            if(error || data == null){
-                return res.status(404).send({success: false, message: "Contact not found", data: null})
-            }else{
-                return res.status(200).send({success: true, message: "Contact details deleted successfully!", data: data})
+            if (error || data == null) {
+                return res.status(404).send({ success: false, message: "Contact not found", data: null })
+            } else {
+                return res.status(200).send({ success: true, message: "Contact details deleted successfully!", data: data })
             }
         })
     }

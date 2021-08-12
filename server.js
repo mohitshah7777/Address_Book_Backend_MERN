@@ -33,7 +33,8 @@ require('./app/routes/routes')(app);
 
 // listen for requests
 app.listen(port, () => {
-    logger.log(`info`,`Server is listening on port : ${port}`);
+    console.log('server is running on '+ port);
+    // logger.log(`info`,`Server is listening on port : ${port}`);
 });
 
 module.exports = app;
