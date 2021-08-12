@@ -5,6 +5,7 @@
  * @author       Mohit Shah <mohitshah7777@gmail.com>
  * @since        01/07/2021  
 -----------------------------------------------------------------------------------------------*/
+const { data } = require('../../logger/logger')
 const model = require('../models/contact')
 
 class ContactService {
@@ -43,12 +44,15 @@ class ContactService {
     /**
      * @description sends the info to readOne in the controller
      * @method getDetailsById
-     * @param callback callback for controller
+     * @param contact
     */
-    getDetailsById = (contact, callback) => {
-        model.findOne(contact, (error, data) => {
-            return (error) ? callback(error, null) : callback(null, data)
-        })
+    getDetailsById = async (contactId) => {
+        try{
+            const data = await model.findOne(contactId);
+            return data;
+        }catch(error){
+            return data;
+        }
     }
 
     /**

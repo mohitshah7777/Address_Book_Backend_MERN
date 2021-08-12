@@ -45,12 +45,10 @@ const contactSchema = mongoose.Schema({
         type: String,
         required : true,
         validate: /^[0-9]{1,6}/      
-    },
-    __v: {
-        versionKey: false
     }
 },{
-    timestamps: true
+    timestamps: true,
+    versionKey: false
 })
 
 const Contact = mongoose.model('Contact', contactSchema)
@@ -100,16 +98,15 @@ class ContactModel {
     /**
      * @description find user by id from the database
      * @param findOne
-     * @param callback for service
+     * @param contactid
      */
-    findOne = (contact, callBack) => {
-        Contact.findById({'_id': contact._id}, (error, data) => {
-            if(error){
-                return callBack(error, null)
-            }else {
-                 return callBack(null, data)
-            }
-        })
+    findOne = async (contactId) => {
+        try{
+            const person = await Contact.findById({'_id':contactId});
+            return person;
+        }catch(error){
+            return error;
+        }
     }
 
     /**

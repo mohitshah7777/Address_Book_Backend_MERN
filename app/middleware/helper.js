@@ -41,11 +41,21 @@ class Helper{
      */
     tokenChecker(req, res, next) {
         let token = req.get('token');
-        return (token) ?
-            jwt.verify(token, process.env.SECRET_TOKEN, error => {
-                return (error) ? res.status(400).send({success: false, message: "Invalid Token"}) : next();
-            }) :
-        res.status(401).send({success: false, message: "Authorisation failed! Invalid user"});
+        try{
+            if(token){
+                jwt.verify(token, process.env.SECRET_TOKEN, error => {
+                    if(error){
+                        return res.status(400).send({success: false, message: "Invalid Token"});
+                    }else{
+                        next();
+                    }
+                })
+            }else{
+                return res.status(401).send({success: false, message: "Authorisation failed! Invalid user"});
+            }
+        }catch(error){
+            return res.status(500).send({success: false, message: "Something went wrong!"});
+        }
     }
 }
 
